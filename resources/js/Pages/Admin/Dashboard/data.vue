@@ -9,7 +9,15 @@ const props = defineProps({
     queue: [Object, Array],
     type: [Object, String],
 });
-
+const formData = useForm({
+    id: null,
+    status: null,
+    type: null,
+    isNew: null,
+    clientId: null,
+    remarks: null,
+    data: null,
+});
 function getType(type) {
     var text = "";
     switch (type) {
@@ -28,11 +36,27 @@ function getType(type) {
 function formatDate(date) {
     return moment(date).format("MMMM DD, YYYY h:mm a");
 }
+onMounted(() => {
+    if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+        if (
+            localStorage.getItem("localID") ||
+            localStorage.getItem("localtype") ||
+            localStorage.getItem("clientID")
+        ) {
+            formData.id = localStorage.getItem("localID");
+            formData.type = localStorage.getItem("localtype");
+            formData.clientId = localStorage.getItem("clientID");
+            formData.post("/admin/approval/getRecords");
+        }
+    }
+  
+});
 </script>
 
 <template>
     <div class="flex items-center justify-between">
         <h1 class="text-2xl font-bold text-center">{{ type }}</h1>
+        
     </div>
 
     <div class="card !p-2 mt-2">
@@ -42,30 +66,20 @@ function formatDate(date) {
                     <thead class="text-md text-gray-700 uppercase">
                         <tr>
                             <th class="cursor-pointer">
-                                <i class="fas fa-arrow-up"></i>
-                                <i class="fas fa-arrow-down"></i>
-                                Type of Permit
+                                 Type of Permit
                             </th>
                             <th class="cursor-pointer">
-                                <i class="fas fa-arrow-up"></i>
-                                <i class="fas fa-arrow-down"></i>
-                                Name of Owner
+                                 Name of Owner
                             </th>
                             <th class="cursor-pointer">
-                                <i class="fas fa-arrow-up"></i>
-                                <i class="fas fa-arrow-down"></i>
-                                Project Title
+                                 Project Title
                             </th>
                             <th class="cursor-pointer">
-                                <i class="fas fa-arrow-up"></i>
-                                <i class="fas fa-arrow-down"></i>
-                                Application Date
+                                 Application Date
                             </th>
                             <th>Remarks</th>
                             <th class="cursor-pointer">
-                                <i class="fas fa-arrow-up"></i>
-                                <i class="fas fa-arrow-down"></i>
-                                Status
+                                  Status
                             </th>
                         </tr>
                     </thead>
@@ -102,12 +116,7 @@ function formatDate(date) {
                 </table>
 
                 <!-- No data available message -->
-                <div
-                    v-if="queue.length <= 0"
-                    class="w-full bg-gray-100 text-center text-sm p-5"
-                >
-                    No data available
-                </div>
+
                 <!-- Pagination -->
             </div>
         </div>

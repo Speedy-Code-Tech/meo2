@@ -115,7 +115,7 @@ const removePdfUrl = (inputId) => {
 // remarks
 const formData = useForm({
     id: null,
-    remarks: null,
+    remarks: props.documentRemarks,
     approved: 0,
 });
 
