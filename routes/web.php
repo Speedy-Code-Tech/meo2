@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/businesspermitform', [ApplicationFormController::class, 'getBusinessReqs'])->name('businesspermitform');
         // Route::inertia('/businesspermitform', 'Client/Forms/BusinessPermitForm')->name('businesspermitform');
         Route::post('/store', [ApplicationFormController::class, 'store'])->name('applicationform.store');
+        Route::post('/update/{id}', [ApplicationFormController::class, 'update'])->name('applicationform.update');
 
         // Route::inertia('/buildingpermitform', 'Client/Forms/BldgPermitForm')->name('buildingpermitform');
         Route::get('/buildingpermitform', [ApplicationFormController::class, 'getBuildingReqs'])->name('buildingpermitform');

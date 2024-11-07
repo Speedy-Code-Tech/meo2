@@ -215,7 +215,7 @@ const getStatus = () => {
                 :class="[
                     !downloadableFile
                         ? 'bg-gray-100 cursor-not-allowed pointer-events-none'
-                        : 'bg-red-400',
+                        : 'bg-red-600',
                 ]"
             >
                 View
@@ -227,8 +227,10 @@ const getStatus = () => {
                 :for="inputId"
                 class="bg-blue-500 text-white px-3 py-1 rounded cursor-pointer"
             >
-                {{ getUploadText() }}
+                <span v-if="!downloadableFile">{{ getUploadText() }}</span>
+                <span v-else-if="downloadableFile">Re Upload </span>
             </label>
+
             {{ getStatus() }}
 
             <input
